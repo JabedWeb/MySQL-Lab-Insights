@@ -3,46 +3,53 @@ USE BankDB;
 
 -- Table: branch
 CREATE TABLE branch (
-    branch_name VARCHAR(13) PRIMARY KEY,
+    branch_name VARCHAR(13) NOT NULL,
     branch_city VARCHAR(13),
-    assets INT
+    assets INT,
+    PRIMARY KEY (branch_name)
 );
 
 -- Table: customer
 CREATE TABLE customer (
-    customer_id VARCHAR(13) PRIMARY KEY,
-    customer_name VARCHAR(13),
-    customer_city VARCHAR(13)
+    customer_id VARCHAR(13) NOT NULL,
+    customer_name VARCHAR(13) NOT NULL,
+    customer_city VARCHAR(13),
+    PRIMARY KEY (customer_id),
+    UNIQUE (customer_name)
 );
 
 -- Table: account
 CREATE TABLE account (
-    account_number VARCHAR(13) PRIMARY KEY,
-    branch_name VARCHAR(13),
-    balance INT,
+    account_number VARCHAR(13) NOT NULL,
+    branch_name VARCHAR(13) NOT NULL,
+    balance INT NOT NULL,
+    PRIMARY KEY (account_number),
     FOREIGN KEY (branch_name) REFERENCES branch(branch_name)
 );
 
 -- Table: loan
 CREATE TABLE loan (
-    loan_number VARCHAR(13) PRIMARY KEY,
-    branch_name VARCHAR(13),
-    amount INT,
+    loan_number VARCHAR(13) NOT NULL,
+    branch_name VARCHAR(13) NOT NULL,
+    amount INT NOT NULL,
+    PRIMARY KEY (loan_number),
     FOREIGN KEY (branch_name) REFERENCES branch(branch_name)
 );
 
 -- Table: depositor
+-- Note: 'customer_name' must reference a UNIQUE field in the 'customer' table.
 CREATE TABLE depositor (
-    customer_name VARCHAR(13),
-    account_number VARCHAR(13),
+    customer_name VARCHAR(13) NOT NULL,
+    account_number VARCHAR(13) NOT NULL,
     FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
     FOREIGN KEY (account_number) REFERENCES account(account_number)
 );
 
 -- Table: borrower
+-- Note: 'customer_name' must reference a UNIQUE field in the 'customer' table.
 CREATE TABLE borrower (
-    customer_name VARCHAR(13),
-    loan_number VARCHAR(13),
+    customer_name VARCHAR(13) NOT NULL,
+    loan_number VARCHAR(13) NOT NULL,
     FOREIGN KEY (customer_name) REFERENCES customer(customer_name),
     FOREIGN KEY (loan_number) REFERENCES loan(loan_number)
 );
@@ -78,7 +85,7 @@ INSERT INTO borrower (customer_name, loan_number) VALUES
 ALTER TABLE customer ADD Email VARCHAR(255);
 
 -- Set value for Email column
-UPDATE customer SET Email = 'jabed@example.com' WHERE customer_id = 'C001';
+UPDATE customer SET Email = 'jabed@gmail.com' WHERE customer_id = 'C001';
 
 -- Change the name of column customer_city to city
 ALTER TABLE customer CHANGE customer_city city VARCHAR(13);
