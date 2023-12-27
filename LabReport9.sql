@@ -29,18 +29,21 @@ INSERT INTO WaiverInfo (StudentID, StudentName, CGPA, WaiverPercentage) VALUES
 
 
 
-DELIMITER //
+DELIMITER $$
+
 CREATE TRIGGER UpdateWaiver BEFORE INSERT ON WaiverInfo
 FOR EACH ROW
 BEGIN
-    IF NEW.CGPA BETWEEN 3.90 AND 4.00 THEN
-        SET NEW.WaiverPercentage = 100;
-    ELSIF NEW.CGPA BETWEEN 3.75 AND 3.89 THEN
-        SET NEW.WaiverPercentage = 50;
-    ELSIF NEW.CGPA BETWEEN 3.50 AND 3.74 THEN
-        SET NEW.WaiverPercentage = 25;
-    ELSE
-        SET NEW.WaiverPercentage = 0;
-    END IF;
-END//
+   IF NEW.CGPA >= 3.90 AND NEW.CGPA <= 4.00 THEN
+       SET NEW.WaiverPercentage = 100;
+   ELSEIF NEW.CGPA >= 3.75 AND NEW.CGPA < 3.90 THEN
+       SET NEW.WaiverPercentage = 50;
+   ELSEIF NEW.CGPA >= 3.50 AND NEW.CGPA < 3.75 THEN
+       SET NEW.WaiverPercentage = 25;
+   ELSE
+       SET NEW.WaiverPercentage = 0;
+   END IF;
+END$$
+
 DELIMITER ;
+
