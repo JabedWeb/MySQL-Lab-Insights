@@ -1,11 +1,10 @@
--- Create a new database named 'sales_db'
-CREATE DATABASE IF NOT EXISTS sales_db;
 
--- Use the 'sales_db' database for the following operations
+CREATE DATABASE  sales_db;
+
 USE sales_db;
 
 -- Create 'orders' table
-CREATE TABLE IF NOT EXISTS orders (
+CREATE TABLE  orders (
     ord_no INT PRIMARY KEY,
     purch_amt DECIMAL(10, 2) NOT NULL,
     ord_date DATE NOT NULL,
@@ -14,7 +13,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 
 -- Create 'customer' table
-CREATE TABLE IF NOT EXISTS customer (
+CREATE TABLE  customer (
     customer_id INT PRIMARY KEY,
     cust_name VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
@@ -23,7 +22,7 @@ CREATE TABLE IF NOT EXISTS customer (
 );
 
 -- Create 'salesman' table
-CREATE TABLE IF NOT EXISTS salesman (
+CREATE TABLE  salesman (
     salesman_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
